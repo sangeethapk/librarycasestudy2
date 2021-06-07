@@ -49,24 +49,7 @@ app.use("/listauthorsforupdate",listauthorupdateRouter);
 
 
 
-app.get('/index', function (req, res) {
-        
-    
-    res.render("index", {
-    nav,
-    title: "Library",
-    img: "library.png"
 
-
-});
-
-});
-
-
-app.get('/', function (req, res) {
-
-res.render('login', { message: ' ' });
-});
 
 ///------------------------------Login----------------------------------------------------------
 
@@ -77,11 +60,11 @@ app.get('/login', function(req, res){
           
  });
 
-app.post('/login', function(req, res){
+ app.post('/login', function(req, res){
       console.log("login entry");
  
-   
-     Credentialdata.find({"username":req.body.userName})
+   try{
+       Credentialdata.find({"username":req.body.userName})
         .then(function (credential) {
             console.log("--------Credential-----"+credential);
             if (credential.length != 0) {
@@ -138,6 +121,11 @@ app.post('/login', function(req, res){
     res.send(err);
 
 });
+   }
+   catch(error){
+
+    res.send(error);
+   }
 
 });
 
@@ -149,7 +137,24 @@ app.post('/login', function(req, res){
 ///------------------------------End of login---------------------------------------------------
 
 
+app.get('/index', function (req, res) {
+        
+    
+    res.render("index", {
+    nav,
+    title: "Library",
+    img: "library.png"
 
+
+});
+
+});
+
+
+app.get('/', function (req, res) {
+
+res.render('login', { message: ' ' });
+});
 
 
 
